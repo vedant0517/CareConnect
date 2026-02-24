@@ -9,7 +9,7 @@ import OrganizationDashboard from './pages/OrganizationDashboard';
 import AIAssistant from './pages/AIAssistant';
 import AuthPage from './pages/AuthPage';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5000/api';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');

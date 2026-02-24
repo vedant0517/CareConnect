@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './AuthPage.css';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5000/api';
 
 function AuthPage({ onLogin, setCurrentPage }) {
     const [isSignup, setIsSignup] = useState(false);

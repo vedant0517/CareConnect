@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './OrganizationDashboard.css';
 import { getAllDonations, getVerifiedDonations } from '../utils/donationManager';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5000/api';
 
 function OrganizationDashboard({ user }) {
   const [showForm, setShowForm] = useState(false);
