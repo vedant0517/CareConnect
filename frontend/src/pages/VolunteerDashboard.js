@@ -95,7 +95,7 @@ function VolunteerDashboard({ user }) {
       const result = await sendOTP(phoneNumber, selectedNeedy.needyId);
       setGeneratedOtp(result.demoOTP);
       setEnteredOtp('');
-      alert(`� New OTP sent successfully!`);
+      alert(`📱 New OTP sent successfully!`);
     } catch (error) {
       alert('Error resending OTP: ' + error.message);
     }
@@ -104,7 +104,6 @@ function VolunteerDashboard({ user }) {
   const handleCancelOtp = () => {
     setShowOtpInput(false);
     setEnteredOtp('');
-    setOtpSent(false);
     setGeneratedOtp('');
   };
 

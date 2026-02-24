@@ -297,10 +297,7 @@ function DonorDashboard({ user }) {
     { id: 'daily', icon: '🏠', name: 'Daily Essentials', description: 'Blankets, utensils', emergency: true, urgency: 'HIGH' },
   ];
 
-  const donationHistory = [
-    { category: 'Food', item: 'Rice & Wheat Flour', quantity: '50 kg', date: '2026-02-20', status: 'Delivered', impact: 'Fed 30 families (🚨 CRITICAL)', emergency: true },
-    { category: 'Medical Supplies', item: 'First Aid Kits & Bandages', quantity: '15 units', date: '2026-02-19', status: 'Delivered', impact: 'Helped 45 patients (🚨 URGENT)', emergency: true },
-  ];
+
   const getDonationImpact = (category, quantity) => {
     switch (category?.toLowerCase()) {
       case 'food': return `Fed ${quantity} people (🚨 CRITICAL)`;

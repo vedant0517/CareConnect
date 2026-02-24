@@ -1,16 +1,18 @@
 
 > careconnect@0.1.0 build
-> react-scripts build
+> set CI=false && react-scripts build
 
-(node:2884) [DEP0176] DeprecationWarning: fs.F_OK is deprecated, use fs.constants.F_OK instead
+(node:22508) [DEP0176] DeprecationWarning: fs.F_OK is deprecated, use fs.constants.F_OK instead
 (Use `node --trace-deprecation ...` to show where the warning was created)
 Creating an optimized production build...
+
+Treating warnings as errors because process.env.CI = true.
+Most CI servers set it automatically.
+
 Failed to compile.
 
 [eslint] 
-src\pages\VolunteerDashboard.js
-  Line 107:5:  'setOtpSent' is not defined  no-undef
-
-Search for the keywords to learn more about each error.
+src\pages\DonorDashboard.js
+  Line 300:9:  'donationHistory' is assigned a value but never used  no-unused-vars
 
 

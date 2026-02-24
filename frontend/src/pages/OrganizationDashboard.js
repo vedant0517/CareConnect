@@ -5,7 +5,6 @@ import { getAllDonations, getVerifiedDonations } from '../utils/donationManager'
 const API_BASE = 'http://localhost:5000/api';
 
 function OrganizationDashboard({ user }) {
-  const [selectedDonation, setSelectedDonation] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [incomingDonationsState, setIncomingDonationsState] = useState([]);
   const [verifiedDonations, setVerifiedDonations] = useState([]);
