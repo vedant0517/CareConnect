@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './VolunteerDashboard.css';
-import { getPendingDonations, acceptDonation, declineDonation, addVerifiedDonation, getVerifiedDonations, getNeedyPeople, sendOTP, verifyOTP, pickupDonation, markInTransit, markDelivered, updateDonationLocation } from '../utils/donationManager';
+import { getPendingDonations, acceptDonation, declineDonation, getVerifiedDonations, getNeedyPeople, sendOTP, verifyOTP, pickupDonation, markInTransit, markDelivered, updateDonationLocation } from '../utils/donationManager';
 import LeafletMap from '../components/LeafletMap';
 
 function VolunteerDashboard({ user }) {
@@ -13,7 +13,6 @@ function VolunteerDashboard({ user }) {
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [generatedOtp, setGeneratedOtp] = useState('');
   const [enteredOtp, setEnteredOtp] = useState('');
-  const [otpSent, setOtpSent] = useState(false);
   const [needyPeople, setNeedyPeople] = useState([]);
 
   // Fetch needy people from API
@@ -34,7 +33,6 @@ function VolunteerDashboard({ user }) {
     setPhoneNumber('');
     setShowOtpInput(false);
     setEnteredOtp('');
-    setOtpSent(false);
   };
 
   const handlePhoneSubmit = async (e) => {
@@ -51,7 +49,6 @@ function VolunteerDashboard({ user }) {
       // Store the OTP returned from backend (for demo)
       setGeneratedOtp(result.demoOTP);
       setShowOtpInput(true);
-      setOtpSent(true);
 
       // Simple success message - OTP is now displayed on screen
       alert(`📱 OTP sent successfully to ${phoneNumber}!`);
@@ -66,7 +63,7 @@ function VolunteerDashboard({ user }) {
 
     try {
       // Call backend API to verify OTP - use needyId field from database
-      const result = await verifyOTP(phoneNumber, selectedNeedy.needyId, enteredOtp);
+      await verifyOTP(phoneNumber, selectedNeedy.needyId, enteredOtp);
 
       // OTP verified successfully
       const verifiedData = {
@@ -85,7 +82,6 @@ function VolunteerDashboard({ user }) {
       setPhoneNumber('');
       setShowOtpInput(false);
       setEnteredOtp('');
-      setOtpSent(false);
       setGeneratedOtp('');
     } catch (error) {
       console.error('Error verifying OTP:', error);

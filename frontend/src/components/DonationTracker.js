@@ -48,7 +48,7 @@ const destinationIcon = new L.Icon({
 // Component to auto-fit map bounds to show all markers
 function MapBoundsHandler({ positions }) {
   const map = useMap();
-  
+
   useEffect(() => {
     if (positions && positions.length > 0) {
       const validPositions = positions.filter(pos => pos && pos.length === 2);
@@ -58,7 +58,7 @@ function MapBoundsHandler({ positions }) {
       }
     }
   }, [positions, map]);
-  
+
   return null;
 }
 
@@ -117,49 +117,47 @@ function DonationTracker({ donation }) {
 
   // E-commerce style progress steps
   const progressSteps = [
-    { 
-      key: 'created', 
-      label: 'Donation Created', 
+    {
+      key: 'created',
+      label: 'Donation Created',
       icon: '📝',
       status: 'Pending',
       completed: true,
       timestamp: donation.createdDate
     },
-    { 
-      key: 'accepted', 
-      label: 'Volunteer Assigned', 
+    {
+      key: 'accepted',
+      label: 'Volunteer Assigned',
       icon: '✅',
       status: 'Accepted by Volunteer',
       completed: ['Accepted by Volunteer', 'Picked Up', 'In Transit', 'Delivered'].includes(status),
       timestamp: assignedVolunteer ? tracking.locationHistory?.find(h => h.status === 'Accepted by Volunteer')?.timestamp : null
     },
-    { 
-      key: 'pickedUp', 
-      label: 'Picked Up', 
+    {
+      key: 'pickedUp',
+      label: 'Picked Up',
       icon: '📦',
       status: 'Picked Up',
       completed: ['Picked Up', 'In Transit', 'Delivered'].includes(status),
       timestamp: tracking.locationHistory?.find(h => h.status === 'Picked Up')?.timestamp
     },
-    { 
-      key: 'inTransit', 
-      label: 'In Transit', 
+    {
+      key: 'inTransit',
+      label: 'In Transit',
       icon: '🚚',
       status: 'In Transit',
       completed: ['In Transit', 'Delivered'].includes(status),
       timestamp: tracking.locationHistory?.find(h => h.status === 'In Transit')?.timestamp
     },
-    { 
-      key: 'delivered', 
-      label: 'Delivered', 
+    {
+      key: 'delivered',
+      label: 'Delivered',
       icon: '🎉',
       status: 'Delivered',
       completed: status === 'Delivered',
       timestamp: status === 'Delivered' ? tracking.locationHistory?.find(h => h.status === 'Delivered')?.timestamp : null
     }
   ];
-
-  const currentStepIndex = progressSteps.findIndex(step => step.status === status);
 
   return (
     <div className="donation-tracker">
@@ -171,7 +169,7 @@ function DonationTracker({ donation }) {
             const isCurrentStep = step.status === status;
             const isCompleted = step.completed;
             const isFuture = !isCompleted && !isCurrentStep;
-            
+
             return (
               <div key={step.key} className={`progress-step ${isCompleted ? 'completed' : ''} ${isCurrentStep ? 'current' : ''} ${isFuture ? 'future' : ''}`}>
                 <div className="step-indicator">
@@ -224,7 +222,7 @@ function DonationTracker({ donation }) {
             <span className="pulse-dot"></span>
             <span className="live-text">LIVE TRACKING</span>
           </div>
-          
+
           <div className="current-location-card">
             <div className="location-icon-wrapper">
               <div className="location-pin">📍</div>
@@ -255,7 +253,7 @@ function DonationTracker({ donation }) {
                 </div>
               </div>
             )}
-            
+
             {tracking.estimatedDelivery && (
               <div className="info-box">
                 <div className="info-icon">⏱️</div>
@@ -291,7 +289,7 @@ function DonationTracker({ donation }) {
                 <p className="detail-value">{assignedVolunteer}</p>
               </div>
             </div>
-            
+
             {volunteerPhone && (
               <div className="volunteer-detail">
                 <span className="detail-icon">📱</span>
@@ -301,7 +299,7 @@ function DonationTracker({ donation }) {
                 </div>
               </div>
             )}
-            
+
             {volunteerVehicle && (
               <div className="volunteer-detail">
                 <span className="detail-icon">🚗</span>
@@ -329,7 +327,7 @@ function DonationTracker({ donation }) {
                 </div>
               </div>
             )}
-            
+
             {donation.bookDetails.subject && (
               <div className="book-detail">
                 <span className="detail-icon">🎓</span>
@@ -339,7 +337,7 @@ function DonationTracker({ donation }) {
                 </div>
               </div>
             )}
-            
+
             {donation.bookDetails.gradeLevel && (
               <div className="book-detail">
                 <span className="detail-icon">📊</span>
@@ -349,7 +347,7 @@ function DonationTracker({ donation }) {
                 </div>
               </div>
             )}
-            
+
             {donation.bookDetails.condition && (
               <div className="book-detail">
                 <span className="detail-icon">⭐</span>
@@ -359,7 +357,7 @@ function DonationTracker({ donation }) {
                 </div>
               </div>
             )}
-            
+
             {donation.bookDetails.language && (
               <div className="book-detail">
                 <span className="detail-icon">🌐</span>
@@ -370,7 +368,7 @@ function DonationTracker({ donation }) {
               </div>
             )}
           </div>
-          
+
           {/* Matching schools indicator */}
           <div className="matching-schools-notice">
             <span className="matching-icon">🎯</span>
@@ -427,7 +425,7 @@ function DonationTracker({ donation }) {
       {(() => {
         // Extract coordinates from location history
         const pickupLocation = tracking.locationHistory?.[0];
-        
+
         // Pickup coordinates - prioritize actual coordinates from donation
         let pickupCoords;
         if (pickupLocation?.coordinates && pickupLocation.coordinates.lat && pickupLocation.coordinates.lng) {
@@ -441,34 +439,34 @@ function DonationTracker({ donation }) {
           pickupCoords = [12.9716, 77.5946];
           console.warn('⚠️ No coordinates available, using default location');
         }
-        
+
         // Current location (use volunteer position if active and different from pickup)
-        const currentLocation = (isActive && tracking.coordinates && 
-                                tracking.coordinates.lat && tracking.coordinates.lng &&
-                                (tracking.coordinates.lat !== pickupCoords[0] || 
-                                 tracking.coordinates.lng !== pickupCoords[1]))
+        const currentLocation = (isActive && tracking.coordinates &&
+          tracking.coordinates.lat && tracking.coordinates.lng &&
+          (tracking.coordinates.lat !== pickupCoords[0] ||
+            tracking.coordinates.lng !== pickupCoords[1]))
           ? [tracking.coordinates.lat, tracking.coordinates.lng]
           : pickupCoords;
-        
+
         // Destination coordinates (estimate based on direction or use offset from current)
         const destinationCoords = isActive ? [
           currentLocation[0] + 0.05,
           currentLocation[1] + 0.05
         ] : pickupCoords;
-        
+
         // All positions for map bounds
         const allPositions = [pickupCoords, currentLocation, destinationCoords];
-        
+
         // Route path
         const routePath = tracking.locationHistory
           ?.filter(loc => loc.coordinates && loc.coordinates.lat && loc.coordinates.lng)
           .map(loc => [loc.coordinates.lat, loc.coordinates.lng]) || [pickupCoords, currentLocation];
-        
+
         // Check if we have real coordinates
-        const hasRealCoordinates = (pickupLocation?.coordinates && pickupLocation.coordinates.lat) || 
-                                   (tracking.coordinates && tracking.coordinates.lat);
+        const hasRealCoordinates = (pickupLocation?.coordinates && pickupLocation.coordinates.lat) ||
+          (tracking.coordinates && tracking.coordinates.lat);
         const mapZoom = hasRealCoordinates ? 15 : 12;
-        
+
         return (
           <div className="map-container">
             <div className="map-header">
@@ -497,29 +495,29 @@ function DonationTracker({ donation }) {
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                
+
                 {/* Pickup Location Marker (Green) */}
                 <Marker position={pickupCoords} icon={pickupIcon}>
                   <Popup>
                     <div className="map-popup">
-                      <strong>🏠 Pickup Location</strong><br/>
-                      {pickupLocation?.location || donation.pickupLocation}<br/>
+                      <strong>🏠 Pickup Location</strong><br />
+                      {pickupLocation?.location || donation.pickupLocation}<br />
                       <small>{pickupLocation?.timestamp ? new Date(pickupLocation.timestamp).toLocaleString() : ''}</small>
                     </div>
                   </Popup>
                 </Marker>
-                
+
                 {/* Current Volunteer Location Marker (Blue) - Only show when active */}
                 {isActive && (
                   <Marker position={currentLocation} icon={currentIcon}>
                     <Popup>
                       <div className="map-popup">
-                        <strong>🚚 Current Location</strong><br/>
-                        {tracking.currentLocation}<br/>
-                        <small>Updated: {new Date(tracking.lastUpdate).toLocaleTimeString()}</small><br/>
+                        <strong>🚚 Current Location</strong><br />
+                        {tracking.currentLocation}<br />
+                        <small>Updated: {new Date(tracking.lastUpdate).toLocaleTimeString()}</small><br />
                         {assignedVolunteer && (
                           <>
-                            <strong>Volunteer:</strong> {assignedVolunteer}<br/>
+                            <strong>Volunteer:</strong> {assignedVolunteer}<br />
                             {volunteerPhone && (
                               <><strong>Phone:</strong> {volunteerPhone}</>
                             )}
@@ -529,14 +527,14 @@ function DonationTracker({ donation }) {
                     </Popup>
                   </Marker>
                 )}
-                
+
                 {/* Destination Marker (Red) */}
                 {tracking.destinationAddress && (
                   <Marker position={destinationCoords} icon={destinationIcon}>
                     <Popup>
                       <div className="map-popup">
-                        <strong>🎯 Destination</strong><br/>
-                        {tracking.destinationAddress}<br/>
+                        <strong>🎯 Destination</strong><br />
+                        {tracking.destinationAddress}<br />
                         {tracking.estimatedDelivery && (
                           <small>ETA: {tracking.estimatedDelivery}</small>
                         )}
@@ -544,7 +542,7 @@ function DonationTracker({ donation }) {
                     </Popup>
                   </Marker>
                 )}
-                
+
                 {/* Route Path */}
                 {routePath.length > 1 && (
                   <Polyline
@@ -555,12 +553,12 @@ function DonationTracker({ donation }) {
                     dashArray="10, 10"
                   />
                 )}
-                
+
                 {/* Auto-fit bounds to show all markers */}
                 <MapBoundsHandler positions={allPositions} />
               </MapContainer>
             </div>
-            
+
             {/* Map Legend */}
             <div className="map-legend">
               <div className="legend-item">
@@ -598,7 +596,7 @@ function DonationTracker({ donation }) {
           ⏳ Your donation is waiting to be accepted by a volunteer...
         </div>
       )}
-      
+
       {status === 'Delivered' && (
         <div className="status-message success">
           🎉 Donation successfully delivered! Thank you for making a difference!
