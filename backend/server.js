@@ -59,14 +59,19 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: 'Internal server error' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Care Connect API Server is running on port ${PORT}`);
-  console.log(`📍 API Base URL: http://localhost:${PORT}/api`);
-  console.log(`\n📚 Available Endpoints:`);
-  console.log(`   - Auth: http://localhost:${PORT}/api/auth`);
-  console.log(`   - Donations: http://localhost:${PORT}/api/donations`);
-  console.log(`   - Volunteers: http://localhost:${PORT}/api/volunteers`);
-  console.log(`   - Organizations: http://localhost:${PORT}/api/organizations`);
-  console.log(`   - AI Assistant: http://localhost:${PORT}/api/ai`);
-});
+// Start server (only when running locally, not on Vercel)
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Care Connect API Server is running on port ${PORT}`);
+    console.log(`📍 API Base URL: http://localhost:${PORT}/api`);
+    console.log(`\n📚 Available Endpoints:`);
+    console.log(`   - Auth: http://localhost:${PORT}/api/auth`);
+    console.log(`   - Donations: http://localhost:${PORT}/api/donations`);
+    console.log(`   - Volunteers: http://localhost:${PORT}/api/volunteers`);
+    console.log(`   - Organizations: http://localhost:${PORT}/api/organizations`);
+    console.log(`   - AI Assistant: http://localhost:${PORT}/api/ai`);
+  });
+}
+
+// Export for Vercel serverless
+module.exports = app;
